@@ -8,7 +8,10 @@ import { Server } from 'socket.io'
 const app = express()
 const server = http.createServer(app)
 const io = new Server(server)
-const PORT = 8080
+
+import 'dotenv/config'
+
+const PORT = process.env.PORT
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
