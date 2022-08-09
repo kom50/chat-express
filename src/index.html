@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* padding: 2px; */
+        }
+
+        .bottom {
+            position: absolute;
+            bottom: 10px;
+            width: 100vw;
+            background-color: aquamarine;
+        }
+
+        .bottom input {
+            width: 80%;
+            padding: 14px;
+            font-size: 20px;
+        }
+
+        .bottom button {
+            width: 15%;
+            padding: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Chat Application</h1>
+    <div class="message">
+
+    </div>
+    <div class="bottom">
+        <input type="text">
+        <button> send msg</button>
+    </div>
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        let socket = io();
+
+        // socket.on('connection', (socket1) => {
+        //     console.log('connection ', socket1)
+
+        //     socket.on('disconnect', () => {
+        //         console.log('user disconnected');
+        //     });
+
+        // })
+
+        const input = document.querySelector('input');
+        document.querySelector('button').onclick = () => {
+            console.log("Send msg")
+            socket.emit('chat message', input.value);
+            input.value = ''
+        }
+
+
+        socket.on('chat message', (msg) => {
+            let item = document.createElement('li')
+            item.textContent = msg
+            document.querySelector('.message').appendChild(item)
+            window.scrollTo(0, document.body.scrollHeight)
+        })
+    </script>
+</body>
+
+</html>
